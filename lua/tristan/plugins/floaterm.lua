@@ -17,6 +17,6 @@ return {
 			if exec ~= nil then
 				require("FTerm").scratch({ cmd = { exec, buf } })
 			end
-		end)
+		end, { desc = "Run current buffer" })
 	end,
 }

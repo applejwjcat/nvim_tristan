@@ -3,8 +3,13 @@ return {
 		"mbbill/undotree",
 		keys = { "<leader>u" },
 		config = function()
+			vim.keymap.set(
+				"n",
+				"<leader>u",
+				":UndotreeToggle<CR>",
+				{ noremap = true, silent = true, desc = "Open the undotree" }
+			)
 			vim.cmd([[
-      noremap <leader>u :UndotreeToggle<CR>
 
       let g:undotree_DiffAutoOpen = 1
       let g:undotree_SetFocusWhenToggle = 1
