@@ -132,7 +132,7 @@ return {
 					end,
 					settings = {
 						python = {
-							pythonPath = "/usr/bin/python3",
+							pythonPath = vim.g.python3_host_prog,
 							analysis = {
 								typeCheckingMode = "basic",
 								autoSearchPaths = true,

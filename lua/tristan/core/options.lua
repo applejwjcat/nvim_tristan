@@ -83,3 +83,15 @@ if vim.fn.has("persistent_undo") == 1 then
 	opt.undofile = true -- 启用撤销文件
 	opt.undodir = { vim.fn.expand("$HOME/.local/share/nvim/generate/undotreetmp/undo"), "." }
 end
+
+-- vim.g.python3_host_prog = "/Users/tristan/.local/software/anaconda3/bin/python3"
+-- 使用 Lua 检查 CONDA_PREFIX 环境变量并设置 python3_host_prog
+local conda_prefix = os.getenv("CONDA_PREFIX")
+
+if conda_prefix and vim.fn.isdirectory(conda_prefix) == 1 then
+	-- 如果 CONDA_PREFIX 存在并且目录有效，使用 CONDA_PREFIX 下的 Python 解释器
+	vim.g.python3_host_prog = conda_prefix .. "/bin/python3"
+else
+	-- 如果 CONDA_PREFIX 不存在或目录无效，使用系统默认的 Python 解释器
+	vim.g.python3_host_prog = "/usr/bin/python3"
+end

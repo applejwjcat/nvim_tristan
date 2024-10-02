@@ -7,7 +7,7 @@ return {
 		lint.linters_by_ft = {
 			python = { "pylint" },
 		}
-		lint.linters.pylint.cmd = "/usr/bin/python3"
+		lint.linters.pylint.cmd = vim.g.python3_host_prog
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
