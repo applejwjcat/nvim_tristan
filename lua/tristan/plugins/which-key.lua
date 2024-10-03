@@ -5,11 +5,20 @@ return {
 		vim.o.timeout = true
 		vim.o.timeoutlen = 500
 	end,
-	opts = {
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		-- refer to the configuration section below
-	},
+	config = function()
+		local wk = require("which-key")
+		wk.add({
+			{ "<leader>c", "Copilot config" },
+			{ "<leader>D", "Show Diagnostic" },
+			{ "<leader>d", "Show Debug details" },
+			{ "<leader>e", "File explore" },
+			{ "<leader>f", "Fuzzy find" },
+			{ "<leader>r", "rename" },
+			{ "<leader>s", "window split" },
+			{ "<leader>t", "tab config" },
+			{ "<leader>x", "trouble workspace" },
+		})
+	end,
 	keys = {
 		{
 			"<leader>/",
