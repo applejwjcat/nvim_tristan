@@ -10,7 +10,6 @@ return {
 		wk.add({
 			{ "<leader>c", "Copilot config" },
 			{ "<leader>D", "Show Diagnostic" },
-			{ "<leader>d", "Show Debug details" },
 			{ "<leader>e", "File explore" },
 			{ "<leader>f", "Fuzzy find" },
 			{ "<leader>r", "rename" },
