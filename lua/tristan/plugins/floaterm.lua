@@ -11,6 +11,7 @@ return {
 		local runners = { lua = "lua", javascript = "node", python = "python3" }
 
 		vim.keymap.set("n", "<leader><Enter>", function()
+			vim.api.nvim_command("w")
 			local buf = vim.api.nvim_buf_get_name(0)
 			local ftype = vim.filetype.match({ filename = buf })
 			local exec = runners[ftype]
