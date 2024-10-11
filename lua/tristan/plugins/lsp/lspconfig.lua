@@ -69,6 +69,24 @@ return {
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local capabilities_cpp = vim.lsp.protocol.make_client_capabilities()
+		capabilities_cpp.textDocument.completion.completionItem = {
+			documentationFormat = { "markdown", "plaintext" },
+			snippetSupport = true,
+			preselectSupport = true,
+			insertReplaceSupport = true,
+			labelDetailsSupport = true,
+			deprecatedSupport = true,
+			commitCharactersSupport = true,
+			tagSupport = { valueSet = { 1 } },
+			resolveSupport = {
+				properties = {
+					"documentation",
+					"detail",
+					"additionalTextEdits",
+				},
+			},
+		}
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
@@ -88,7 +106,7 @@ return {
 			["svelte"] = function()
 				-- configure svelte server
 				lspconfig["svelte"].setup({
-					capabilities = capabilities,
+					capabilities = capabilities_cpp,
 					on_attach = function(client, bufnr)
 						vim.api.nvim_create_autocmd("BufWritePost", {
 							pattern = { "*.js", "*.ts" },
@@ -121,6 +139,18 @@ return {
 						"less",
 						"svelte",
 					},
+				})
+			end,
+			["clangd"] = function()
+				-- configure clangd language server
+				lspconfig["clangd"].setup({
+					capabilities = capabilities,
+					on_attach = function(client, bufnr)
+						client.server_capabilities.signatureHelpProvider = true
+						print("Clangd is attached to buffer", bufnr)
+						print("Attached LSP client: " .. client.name)
+					end,
+					filetypes = { "c", "cpp", "objc", "objcpp" },
 				})
 			end,
 			["pyright"] = function() -- specific handler for pyright

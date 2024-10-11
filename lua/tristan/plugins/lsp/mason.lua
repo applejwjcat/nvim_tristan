@@ -42,6 +42,8 @@ return {
 				"black", -- python formatter
 				"pylint",
 				"debugpy",
+				"clangd",
+				"clang-format",
 			},
 		})
 	end,
