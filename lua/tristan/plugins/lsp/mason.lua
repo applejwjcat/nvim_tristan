@@ -44,6 +44,7 @@ return {
 				"debugpy",
 				"clangd",
 				"clang-format",
+				"codelldb",
 			},
 		})
 	end,

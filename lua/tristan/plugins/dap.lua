@@ -10,6 +10,14 @@ local function get_args(config)
 	return config
 end
 
+local compile = function()
+	vim.cmd("write")
+	local filetype = vim.bo.filetype
+	if filetype == "cpp" or filetype == "c" then
+		os.execute("clang++ --debug " .. vim.fn.expand("%") .. " -o " .. vim.fn.expand("%<"))
+	end
+end
+
 return {
 	{
 		"mfussenegger/nvim-dap",
@@ -32,6 +40,7 @@ return {
       { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
       { "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
       { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
+      { "<leader>dA", function() compile() require("dap").continue() end, desc = "Compile and run" },
       { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
       { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
       { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
@@ -50,6 +59,32 @@ return {
 		config = function()
 			-- load mason-nvim-dap here, after all adapters have been setup
 			require("mason-nvim-dap").setup()
+			local dap = require("dap")
+			dap.adapters.codelldb = {
+				type = "server",
+				port = "${port}",
+				executable = {
+					-- CHANGE THIS to your path!
+					command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+					args = { "--port", "${port}" },
+				},
+			}
+
+			dap.configurations.cpp = {
+				{
+					name = "Launch file",
+					type = "codelldb",
+					request = "launch",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					cwd = "${workspaceFolder}",
+					stopOnEntry = false,
+				},
+			}
+
+			dap.configurations.c = dap.configurations.cpp
+			dap.configurations.rust = dap.configurations.cpp
 
 			vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
