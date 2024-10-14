@@ -83,33 +83,44 @@ return {
 			local ftype = vim.filetype.match({ filename = buf })
 			local exec = runners[ftype]
 
-			if ftype == "cpp" then
-				local output = vim.fn.fnamemodify(buf, ":r")
-				local cmd = string.format("clang++ %s -o %s && %s", buf, output, output)
+			if ftype == "cpp" or ftype == "c" then
+				local dir = vim.fn.fnamemodify(buf, ":p:h")
+				local build_dir = dir .. "/build"
 
-				local term = require("toggleterm.terminal").Terminal:new({
-					cmd = cmd,
-					close_on_exit = false,
-					direction = "float",
-				})
-				term:toggle()
-			elseif ftype == "c" then
-				local output = vim.fn.fnamemodify(buf, ":r")
-				local cmd = string.format("clang %s -o %s && %s", buf, output, output)
+				if vim.fn.isdirectory(build_dir) == 0 then
+					vim.fn.mkdir(build_dir, "p")
+				end
 
-				local term = require("toggleterm.terminal").Terminal:new({
-					cmd = cmd,
-					close_on_exit = false,
-					direction = "float",
-				})
-				term:toggle()
-			elseif exec ~= nil then
-				local term = require("toggleterm.terminal").Terminal:new({
-					cmd = exec .. " " .. buf,
-					close_on_exit = false,
-					direction = "float",
-				})
-				term:toggle()
+				local output = build_dir .. "/" .. vim.fn.fnamemodify(buf, ":t:r")
+
+				if ftype == "cpp" then
+					local cmd = string.format("clang++ %s -o %s && %s", buf, output, output)
+
+					local term = require("toggleterm.terminal").Terminal:new({
+						cmd = cmd,
+						close_on_exit = false,
+						direction = "float",
+					})
+					term:toggle()
+				elseif ftype == "c" then
+					local cmd = string.format("clang %s -o %s && %s", buf, output, output)
+
+					local term = require("toggleterm.terminal").Terminal:new({
+						cmd = cmd,
+						close_on_exit = false,
+						direction = "float",
+					})
+					term:toggle()
+				end
+			else
+				if exec ~= nil then
+					local term = require("toggleterm.terminal").Terminal:new({
+						cmd = exec .. " " .. buf,
+						close_on_exit = false,
+						direction = "float",
+					})
+					term:toggle()
+				end
 			end
 		end, { desc = "Run current buffer" })
 	end,
