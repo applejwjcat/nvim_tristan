@@ -147,8 +147,8 @@ return {
 					capabilities = capabilities,
 					on_attach = function(client, bufnr)
 						client.server_capabilities.signatureHelpProvider = true
-						print("Clangd is attached to buffer", bufnr)
-						print("Attached LSP client: " .. client.name)
+						-- print("Clangd is attached to buffer", bufnr)
+						-- print("Attached LSP client: " .. client.name)
 					end,
 					filetypes = { "c", "cpp", "objc", "objcpp" },
 				})

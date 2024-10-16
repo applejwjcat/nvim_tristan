@@ -94,7 +94,7 @@ return {
 				local output = build_dir .. "/" .. vim.fn.fnamemodify(buf, ":t:r")
 
 				if ftype == "cpp" then
-					local cmd = string.format("clang++ %s -o %s && %s", buf, output, output)
+					local cmd = string.format("clang++ -std=c++11 %s -o %s && %s", buf, output, output)
 
 					local term = require("toggleterm.terminal").Terminal:new({
 						cmd = cmd,
