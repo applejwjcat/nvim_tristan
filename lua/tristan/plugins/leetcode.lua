@@ -12,7 +12,7 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	opts = {
-		lang = "python3",
+		lang = "cpp",
 		cn = { -- leetcode.cn
 			enabled = true, ---@type boolean
 			translator = true, ---@type boolean

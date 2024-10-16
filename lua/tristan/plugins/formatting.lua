@@ -49,27 +49,27 @@ return {
 		end, { range = true })
 		_G.last_format_time = 0
 
-		vim.api.nvim_create_autocmd({ "FileType" }, {
-			pattern = { "c", "cpp" },
-			callback = function()
-				vim.api.nvim_buf_set_keymap(
-					0,
-					"i",
-					";",
-					";<Esc>:lua require('conform').conditional_format()<CR>a",
-					{ noremap = true, silent = true }
-				)
-			end,
-		})
-
-		function conform.conditional_format()
-			local current_time = vim.loop.now()
-			if current_time - _G.last_format_time > 30000 then -- 检查是否已经过去60秒
-				_G.last_format_time = current_time
-				vim.cmd("Format")
-				-- else
-				-- vim.notify("Format command is on cooldown. Please wait.", vim.log.levels.INFO, { timeout = 3000 })
-			end
-		end
+		-- vim.api.nvim_create_autocmd({ "FileType" }, {
+		-- 	pattern = { "c", "cpp" },
+		-- 	callback = function()
+		-- 		vim.api.nvim_buf_set_keymap(
+		-- 			0,
+		-- 			"i",
+		-- 			";",
+		-- 			";<Esc>:lua require('conform').conditional_format()<CR>a",
+		-- 			{ noremap = true, silent = true }
+		-- 		)
+		-- 	end,
+		-- })
+		--
+		-- function conform.conditional_format()
+		-- 	local current_time = vim.loop.now()
+		-- 	if current_time - _G.last_format_time > 30000 then -- 检查是否已经过去60秒
+		-- 		_G.last_format_time = current_time
+		-- 		vim.cmd("Format")
+		-- 		-- else
+		-- 		-- vim.notify("Format command is on cooldown. Please wait.", vim.log.levels.INFO, { timeout = 3000 })
+		-- 	end
+		-- end
 	end,
 }
