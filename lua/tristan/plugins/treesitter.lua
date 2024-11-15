@@ -64,8 +64,8 @@ return {
 				},
 			},
 		})
-		vim.cmd("highlight TSDefinition guibg=#ff875f guifg=#ffffff")
-		vim.cmd("highlight TSDefinitionUsage guibg=#ff875f guifg=#ffffff")
+		vim.cmd("highlight TSDefinition guibg=#D90086 guifg=#ffffff")
+		vim.cmd("highlight TSDefinitionUsage guibg=#D90086 guifg=#ffffff")
 		-- vim.cmd("highlight TSDefinition guibg=#880000 guifg=#ffffff")
 		-- vim.cmd("highlight TSDefinitionUsage guibg=#880000 guifg=#ffffff")
 	end,
