@@ -3,7 +3,8 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
 	dependencies = {
-		"windwp/nvim-ts-autotag",
+		-- "windwp/nvim-ts-autotag",
+		"nvim-treesitter/nvim-treesitter-refactor",
 	},
 	config = function()
 		-- import nvim-treesitter plugin
@@ -17,10 +18,18 @@ return {
 			-- enable indentation
 			indent = { enable = true, disable = { "python" } },
 			-- enable autotagging (w/ nvim-ts-autotag plugin)
-			autotag = {
-				enable = true,
-			},
+			-- autotag = {
+			-- enable = true,
+			-- },
 			-- ensure these language parsers are installed
+			refactor = {
+				highlight_definitions = {
+					enable = true,
+				},
+				highlight_current_scope = {
+					enable = false,
+				},
+			},
 			ensure_installed = {
 				"json",
 				"javascript",
@@ -55,5 +64,9 @@ return {
 				},
 			},
 		})
+		vim.cmd("highlight TSDefinition guibg=#ff875f guifg=#ffffff")
+		vim.cmd("highlight TSDefinitionUsage guibg=#ff875f guifg=#ffffff")
+		-- vim.cmd("highlight TSDefinition guibg=#880000 guifg=#ffffff")
+		-- vim.cmd("highlight TSDefinitionUsage guibg=#880000 guifg=#ffffff")
 	end,
 }
