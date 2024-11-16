@@ -27,6 +27,11 @@ return {
 				async = false,
 				timeout_ms = 1000,
 			},
+			formatters = {
+				black = {
+					prepend_args = { "--line-length", "120" },
+				},
+			},
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>lf", function()
